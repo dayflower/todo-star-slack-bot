@@ -1,0 +1,16 @@
+{
+  "name": "todo-star-slack-bot",
+  "version": "0.0.1",
+  "description": "todo star slack bot",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node examples/bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dayflower <daydream.trippers@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/client": "^4.8.0"
+  }
+}
