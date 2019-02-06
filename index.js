@@ -214,8 +214,8 @@ class TodoStarBot {
   }
 }
 
-function runTodoStarBot(options = {}) {
-  const slackApiToken = options.hasOwnProperty('slackApiToken') ? options.slackApiToken : process.env.SLACK_API_TOKEN
+function runTodoStarBot(args = {}) {
+  const slackApiToken = args.hasOwnProperty('slackApiToken') ? args.slackApiToken : process.env.SLACK_API_TOKEN
 
   if (slackApiToken === undefined) {
     throw "SLACK_API_TOKEN not defined"
@@ -228,10 +228,22 @@ function runTodoStarBot(options = {}) {
     console.log('ready')
   })
 
-  const bot = new TodoStarBot({
+  const options = {
     rtm: rtm,
     webClient: client
-  })
+  }
+
+  if (process.env.hasOwnProperty('TODO_REACTIONS')) {
+    options.todoReactions = process.env.TODO_REACTIONS.split(',')
+  }
+  if (process.env.hasOwnProperty('START_REACTIONS')) {
+    options.startReactions = process.env.START_REACTIONS.split(',')
+  }
+  if (process.env.hasOwnProperty('DONE_REACTIONS')) {
+    options.doneReactions = process.env.DONE_REACTIONS.split(',')
+  }
+
+  const bot = new TodoStarBot(options)
 
   bot.setup().start()
 }
