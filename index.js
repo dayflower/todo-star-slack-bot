@@ -123,16 +123,16 @@ class TodoStarBot {
       return
     }
 
-    if (event.type === 'message') {
-      if (!event.subtype && event.thread_ts === undefined) {
+    if (event.type === 'message' && !event.subtype) {
+      if (event.thread_ts === undefined) {
         if (event.text.match(new RegExp(String.raw`^\s*${this.todoCommandsPattern}(?:\s|$)`))) {
           return this.handleTodoPlainCommand(event.channel, event.ts)
         }
         if (event.text.match(new RegExp(String.raw`^\s*:${this.todoReactionsPattern}:(?:\s|$)`))) {
           return this.handleTodoReactionAdded(event.channel, event.ts)
         }
-      } else if (event.subtype === 'message_replied' && event.message.thread_ts) {
-        const threadTs = event.message.thread_ts
+      } else {
+        const threadTs = event.thread_ts
 
         if (event.text.match(new RegExp(String.raw`^\s*${this.startCommandsPattern}(?:\s|$)`))) {
           return this.handleThreadStartCommand(event.channel, threadTs)
