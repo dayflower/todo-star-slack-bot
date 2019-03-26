@@ -123,7 +123,7 @@ class TodoStarBot {
       return
     }
 
-    if (event.type === 'message' && !event.subtype) {
+    if (event.type === 'message' && (!event.subtype || event.subtype === 'thread_broadcast')) {
       if (event.thread_ts === undefined) {
         if (event.text.match(new RegExp(String.raw`^\s*${this.todoCommandsPattern}(?:\s|$)`))) {
           return this.handleTodoPlainCommand(event.channel, event.ts)
